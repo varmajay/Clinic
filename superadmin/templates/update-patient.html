@@ -1,0 +1,123 @@
+{% extends 'header.html'%}
+{% load static %}
+{% block content %}
+      <div class="main-panel">
+        <!-- BEGIN : Main Content-->
+        <div class="main-content">
+          <div class="content-wrapper"><!-- Basic form layout section start -->
+<section id="horizontal-form-layouts">
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title" id="horz-layout-icons">Update Patients</h4><br>
+          
+        </div>
+        <div class="card-content">
+          <div class="px-3">
+            <form class="form form-horizontal" action="{% url 'update-patient' uid.id %}" method="post">
+              {% csrf_token %}
+              <div class="form-body">
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="timesheetinput1">Patient Name: </label>
+                  <div class="col-md-9">
+                    <div class="position-relative has-icon-left">
+                      <input type="text" id="timesheetinput1" class="form-control" name="name" value="{{uid.name}}">
+                      <div class="form-control-position">
+                        <i class="ft-user"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="timesheetinput2">Email: </label>
+                  <div class="col-md-9">
+                    <div class="position-relative has-icon-left">
+                      <input type="email" id="timesheetinput2" class="form-control" name="email" value="{{uid.email}}" disabled>
+                      <div class="form-control-position">
+                        <i class="fa fa-briefcase"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="timesheetinput1">Phone: </label>
+                  <div class="col-md-9">
+                    <div class="position-relative has-icon-left">
+                      <input type="text" id="timesheetinput1" class="form-control" name="phone" value="{{uid.phone}}">
+                      <div class="form-control-position">
+                        <i class="ft-user"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="timesheetinput1">Gender: </label>
+                  <div class="col-md-3">
+                    <div class="position-relative has-icon-left">     
+                        <select name="gender" class="col-md-9">
+                          {% if uid.gender == 0 %}
+                          <option value=0 selected>Male</option>
+                          <option value=1 >Female</option>
+                          {% else %}
+                          <option value=0 >Male</option>
+                          <option value=1 selected>Female</option>
+                          {% endif %}
+                        </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="timesheetinput7">Address: </label>
+                  <div class="col-md-9">
+                    <div class="position-relative has-icon-left">
+                      <textarea id="timesheetinput7" rows="5" class="form-control" name="address">{{uid.address }}</textarea>
+                      <div class="form-control-position">
+                        <i class="ft-file"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 label-control" for="timesheetinput1">Profile: </label>
+                <div class="col-md-9">
+                  <img src="{{uid.profile.url}}" alt="image" style="height: 100px;width: 100px;">
+                  <div class="position-relative has-icon-left">
+                    <input type="file" id="timesheetinput1" class="form-control" name="profile">
+                    <div class="form-control-position">
+                      <i class="ft-user"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-actions right">
+                
+                <button type="submit" class="btn btn-raised btn-primary">
+                  <i class="fa fa-check-square-o"></i> Update
+                </button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
+</section>
+<!-- // Basic form layout section end -->
+
+          </div>
+        </div>
+        <!-- END : End Main Content-->
+
+{% endblock %}

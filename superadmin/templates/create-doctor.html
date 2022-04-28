@@ -1,0 +1,78 @@
+{% extends 'header.html'%}
+{% load static %}
+{% block content%}
+      <div class="main-panel">
+        <!-- BEGIN : Main Content-->
+        <div class="main-content">
+          <div class="content-wrapper"><!-- Basic form layout section start -->
+<section id="basic-form-layouts">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="content-header">Doctor</div>
+    </div>
+  </div>
+  
+
+
+  <div class="row match-height">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title" id="basic-layout-form-center">Add Doctor </h4>
+          
+        </div>
+        {% if msg %}
+        <p style="color: red;">{{msg}}</p>
+        {% endif %}
+        <div class="card-content">
+          <div class="px-3">
+
+            <form class="form" action="{% url 'create-doctor'%}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="roles" id="" value="doctor">
+              <div class="row justify-content-md-center">
+                <div class="col-md-6">
+                  <div class="form-body">
+                    <div class="form-group">
+                      <label for="eventInput1">Full Name</label>
+                      <input type="text" id="eventInput1" class="form-control" name="name">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="eventInput4">Email</label>
+                      <input type="email" id="eventInput4" class="form-control" name="email">
+                    </div>
+
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-actions center">
+                <button type="reset" class="btn btn-raised btn-warning mr-1">
+                  <i class="ft-x"></i> Reset
+                </button>
+                <button type="submit" class="btn btn-raised btn-primary">
+                  <i class="fa fa-check-square-o"></i>ADD
+                </button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</section>
+<!-- // Basic form layout section end -->
+
+          </div>
+        </div>
+        <br>
+  
+      
+        <!-- END : End Main Content-->
+{% endblock %}
