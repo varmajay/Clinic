@@ -23,10 +23,10 @@ def index_pat(request):
 
 
 def login(request):
-    uid = User.objects.all()
+    
 
     # Admin login
-    if uid.roles == 'admin':
+    if User.roles == 'admin':
         try:
             uid = User.objects.get(email=request.session['email'])
             return redirect('index')
@@ -43,7 +43,7 @@ def login(request):
         return render(request,'login.html') 
 
     #Doctor Login    
-    elif uid.roles == 'doctor':
+    elif User.roles == 'doctor':
         try:
             uid = User.objects.get(email=request.session['email'])
             return redirect('index-doc')
@@ -67,7 +67,9 @@ def login(request):
         except:
             if request.method == 'POST':
                 try:
+                    print(request.POST['email'])
                     uid = User.objects.get(email=request.POST['email'])
+
                     if request.POST['password'] == uid.password:
                         request.session['email'] = request.POST['email']
                         return redirect('index-pat')
