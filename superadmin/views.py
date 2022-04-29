@@ -1,3 +1,4 @@
+import email
 from itertools import count
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
@@ -24,59 +25,39 @@ def index_pat(request):
 
 def login(request):
     
-
     # Admin login
-    if User.roles == 'admin':
         try:
+            
             uid = User.objects.get(email=request.session['email'])
-            return redirect('index')
+            if uid.roles == "admin":
+                return redirect('index')
+            elif uid.roles =="doctor":
+                return redirect('index-doc')
+            else:
+                return redirect('index-pat')
         except:
+            print(User.roles)
             if request.method == 'POST':
                 try:
                     uid = User.objects.get(email=request.POST['email'])
-                    if request.POST['password'] == uid.password:
-                        request.session['email'] = request.POST['email']
-                        return redirect('index')
-                    return render(request,'login.html',{'msg':'Please Enter Valid Password'})
+                    if uid.roles == "admin":
+                        if request.POST['password'] == uid.password:
+                            request.session['email'] = request.POST['email']
+                            return redirect('index')
+                        return render(request,'login.html',{'msg':'Please Enter Valid Password'})
+                    elif uid.roles == "doctor":
+                        if request.POST['password'] == uid.password:
+                            request.session['email'] = request.POST['email']
+                            return redirect('index-doc')
+                        return render(request,'login.html',{'msg':'Please Enter Valid Password'})
+                    else:
+                        if request.POST['password'] == uid.password:
+                            request.session['email'] = request.POST['email']
+                            return redirect('index-pat')
+                        return render(request,'login.html',{'msg':'Please Enter Valid Password'})
                 except:
                     return render(request,'login.html')
         return render(request,'login.html') 
-
-    #Doctor Login    
-    elif User.roles == 'doctor':
-        try:
-            uid = User.objects.get(email=request.session['email'])
-            return redirect('index-doc')
-        except:
-            if request.method == 'POST':
-                try:
-                    uid = User.objects.get(email=request.POST['email'])
-                    if request.POST['password'] == uid.password:
-                        request.session['email'] = request.POST['email']
-                        return redirect('index-doc')
-                    return render(request,'login.html',{'msg':'Please Enter Valid Password'})
-                except:
-                    return render(request,'login.html')
-        return render(request,'login.html')
-
-    # patient Login
-    else:
-        try:
-            uid = User.objects.get(email=request.session['email'])
-            return redirect('index-pat')
-        except:
-            if request.method == 'POST':
-                try:
-                    print(request.POST['email'])
-                    uid = User.objects.get(email=request.POST['email'])
-
-                    if request.POST['password'] == uid.password:
-                        request.session['email'] = request.POST['email']
-                        return redirect('index-pat')
-                    return render(request,'login.html',{'msg':'Please Enter Valid Password'})
-                except:
-                    return render(request,'login.html')
-        return render(request,'login.html')
 
 
 
@@ -140,7 +121,16 @@ def delete_doctor(request,pk):
     return redirect('view-doctor')
 
 
-
+def profile_doc(request):
+    uid = User.objects.get(email=request.session['email'])
+    if request.method == 'POST':
+        uid.name = request.POST['name']
+        uid.clinic_name = request.POST['clinic_name']
+        uid.gender = request.POST['gender']
+        uid.specialty = request.POST['specialty']
+        uid.address = request.POST['address']
+        uid.save
+    return render(request,'profile-doc.html',{'uid':uid})
 
 
 
@@ -195,3 +185,16 @@ def delete_patient(request,pk):
     pat = User.objects.get(id=pk)
     pat.delete()
     return redirect('view-patient')
+
+
+
+def profile_pat(request):
+    uid = User.objects.get(email=request.session['email'])
+    if request.method == "POST":
+        uid.name = request.POST['name']
+        uid.gender = request.POST['gender']
+        uid.address = request.POST['address']
+        if 'profile' in request.FILES:
+            uid.profile = request.FILES['profile']
+        uid.save()
+    return render(request,'profile-pat.html',{'uid':uid})

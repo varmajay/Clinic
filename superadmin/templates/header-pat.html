@@ -50,7 +50,7 @@
         <!-- main menu header-->
         <!-- Sidebar Header starts-->
         <div class="sidebar-header">
-          <div class="logo clearfix"><a href="{% url 'index'%}" class="logo-text float-left">
+          <div class="logo clearfix"><a href="{% url 'index-pat'%}" class="logo-text float-left">
               <div class="logo-img"><img src="{% static 'app-assets/img/logo.png'%}"/></div><span class="text align-middle">patient</span></a><a id="sidebarClose" href="javascript:;" class="nav-close d-block d-md-block d-lg-none d-xl-none"><i class="ft-x"></i></a></div>
         </div>
         <!-- Sidebar Header Ends-->
@@ -59,24 +59,9 @@
         <div class="sidebar-content">
           <div class="nav-container">
             <ul id="main-menu-navigation" data-menu="menu-navigation" data-scroll-to-active="true" class="navigation navigation-main">
-              <li class=" nav-item"><a href=""><i class="ft-home"></i><span data-i18n="" >Dashboard</span></a>
-                
+              <li class=" nav-item"><a href="{% url 'index-pat'%}"><i class="ft-home"></i><span data-i18n="" >Dashboard</span></a>
               </li>
-              <li class="has-sub nav-item"><a href="#"><i class="fas fa-user-md"></i><span data-i18n="" class="menu-title">Doctor</span></a>
-                <ul class="menu-content">
-                  <li><a href="" class="menu-item">Create Doctor</a>
-                  </li>
-                  <li><a href="" class="menu-item">View Doctor</a>
-                  </li>
-                </ul>
-              </li>
-              <li class="has-sub nav-item"><a href="#"><i class="ft-aperture"></i><span data-i18n="" class="menu-title">Patient</span></a>
-                <ul class="menu-content">
-                  <li><a href="" class="menu-item">Create Patient</a>
-                  </li>
-                  <li><a href="" class="menu-item">View Patient</a>
-                  </li>
-                </ul>
+              <li class=" nav-item"><a href="{% url 'profile-pat'%}"><i class="ft-user-plus"></i><span data-i18n="" >Profile</span></a>
               </li>
               <li class="has-sub nav-item"><a href="#"><i class="ft-aperture"></i><span data-i18n="" class="menu-title">Appoinment</span></a>
                 <ul class="menu-content">
@@ -120,7 +105,7 @@
                 
                 <li class="dropdown nav-item"><a id="dropdownBasic3" href="#" data-toggle="dropdown" class="nav-link position-relative dropdown-toggle"><i class="ft-user font-medium-3 blue-grey darken-4"></i>
                     <p class="d-none">User Settings</p></a>
-                  <div ngbdropdownmenu="" aria-labelledby="dropdownBasic3" class="dropdown-menu text-left dropdown-menu-right"><a href="../../../html/html/ltr/user-profile-page.html" class="dropdown-item py-1"><i class="ft-edit mr-2"></i><span>Edit Profile</span></a>
+                  <div ngbdropdownmenu="" aria-labelledby="dropdownBasic3" class="dropdown-menu text-left dropdown-menu-right"><a href="{% url 'profile-pat'%}" class="dropdown-item py-1"><i class="ft-edit mr-2"></i><span>Edit Profile</span></a>
                     <div class="dropdown-divider"></div><a href="{% url 'logout'%}" class="dropdown-item"><i class="ft-power mr-2"></i><span>Logout</span></a>
                   </div>
                 </li>

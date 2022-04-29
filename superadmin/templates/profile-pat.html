@@ -1,0 +1,156 @@
+{% extends 'header-pat.html' %}
+{% load static %}
+{% block content %}
+      <div class="main-panel">
+        <!-- BEGIN : Main Content-->
+        <div class="main-content">
+          <div class="content-wrapper"><!--User Profile Starts-->
+<!--Basic User Details Starts-->
+<section id="user-profile">
+  <div class="row">
+    <div class="col-12">
+      <div class="card profile-with-cover">
+        <div class="card-img-top img-fluid bg-cover height-300" style="background: url('{% static 'app-assets/img/photos/14.jpg'%}') 50%;"></div>
+        <div class="media profil-cover-details row">
+          <div class="col-5">
+            <div class="align-self-start halfway-fab pl-3 pt-2">
+              <div class="text-left">
+                <h3 class="card-title white">{{uid.name}}</h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="align-self-center halfway-fab text-center">
+              <a class="profile-image">
+                <img src="{{uid.profile.url}}" class="rounded-circle img-border gradient-summer width-150"
+                  alt="Card image">
+              </a>
+            </div>
+          </div>
+          <div class="col-5">
+          </div>
+          <div class="profile-cover-buttons">
+            <div class="media-body halfway-fab align-self-end">
+              <div class="text-right d-none d-sm-none d-md-none d-lg-block">
+                <button type="button" class="btn btn-primary btn-raised mr-2"><i class="fa fa-plus"></i> Follow</button>
+                <button type="button" class="btn btn-success btn-raised mr-3"><i class="fa fa-dashcube"></i> Message</button>
+              </div>
+              <div class="text-right d-block d-sm-block d-md-block d-lg-none">
+                <button type="button" class="btn btn-primary btn-raised mr-2"><i class="fa fa-plus"></i></button>
+                <button type="button" class="btn btn-success btn-raised mr-3"><i class="fa fa-dashcube"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="profile-section">
+          <div class="row">
+            <div class="col-lg-5 col-md-5 ">
+              <ul class="profile-menu no-list-style">
+                <li>
+                  <a href="#about" class="primary font-medium-2 font-weight-600">About</a>
+                </li>
+                <li>
+                  <a href="#user" class="primary font-medium-2 font-weight-600">Timeline</a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-lg-2 col-md-2 text-center">
+              <span class="font-medium-2 text-uppercase">{{uid.name}}</span>
+              <p class="grey font-small-2">{{uid.roles}}</p>
+            </div>
+            <div class="col-lg-5 col-md-5">
+              <ul class="profile-menu no-list-style">
+                <li>
+                  <a href="#friends" class="primary font-medium-2 font-weight-600">Friends</a>
+                </li>
+                <li>
+                  <a href="#photos" class="primary font-medium-2 font-weight-600">Photos</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="row match-height">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title" id="basic-layout-form-center">Edit Profile </h4>
+        
+      </div>
+      <div class="card-content">
+        <div class="px-3">
+
+          <form class="form" action="{% url 'profile-pat'%}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row justify-content-md-center">
+              <div class="col-md-6">
+                <div class="form-body">
+                  <div class="form-group">
+                    <label for="eventInput1"> Name:</label>
+                    <input type="text" id="eventInput1" class="form-control" name="name" value="{{uid.name}}">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="eventInput2">Email:</label>
+                    <input type="email" id="eventInput2" class="form-control" name="email" value="{{uid.email}}" disabled>
+                  </div>
+
+                  
+                  <div class="form-group">
+                    <label for="eventInput3">Gender:</label><br>
+                    <select name="gender" class="col-md-4">
+                      {% if uid.gender == 0 %}
+                      <option value=0 selected>Male</option>
+                      <option value=1 >Female</option>
+                      {% else %}
+                      <option value=0 >Male</option>
+                      <option value=1 selected>Female</option>
+                      {% endif %}
+                    </select>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="eventInput3">Address:</label>
+                    <textarea id="timesheetinput7" rows="5" class="form-control" name="address">{{uid.address }}</textarea>
+                  </div>
+                <div class="form-group">
+                  <label for="eventInput3">Profile:</label><br>
+                  <img src="{{uid.profile.url}}" alt="" style="height: 100;" width="100">
+                  <input type="file" name="profile" id="">
+                </div>
+                
+              </div>
+              </div>
+            </div>
+
+            <div class="form-actions center">
+              <button type="reset" class="btn btn-raised btn-warning mr-1">
+                <i class="ft-x"></i> Reset
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class="fa fa-check-square-o"></i> Update
+              </button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!--Basic User Details Ends-->
+
+
+          </div>
+        </div>
+        <!-- END : End Main Content-->
+
+{% endblock %}
