@@ -1,0 +1,215 @@
+{% extends 'header-pat.html'%}
+{% load static %}
+{% block content %}
+<div class="main-panel">
+  <!-- BEGIN : Main Content-->
+  <div class="main-content">
+    <div class="content-wrapper">
+      <!-- Form actions layout section start -->
+      <section id="form-action-layouts">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="content-header"> Appoinment Booking </div>
+          </div>
+        </div>
+
+
+
+        <div class="row match-height">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title" id="from-actions-top-bottom-left">Book your Appoinment </h4>
+              </div>
+              <div class="card-body">
+                <div class="px-3">
+
+                  <form class="form" action="{% url 'create-book-app'%}" method="post">
+                    {% csrf_token %}
+                    
+                    <input type="text" name="slot_id" value="{{slot.id}}">
+
+
+                    <div class="form-body">
+                      <input type="hidden" value="{{book.id}}" id="doc_id">
+                      <div class="row">
+                        <div class="form-group col-12 mb-2">
+                          <label for="issueinput5">Select Doctor: </label>
+                          <select id="doc" name="doctor_name" class="form-control" data-toggle="tooltip"
+                            data-trigger="hover" data-placement="top" data-title="Priority">
+                            <option value="">--------------------------SELECT----------------------------</option>
+                            {% for x in book %}
+                            <option value="{{x.id}}">{{x.name}}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="form-group col-12 mb-2">
+                          <label for="issueinput6">select Weeks: </label>
+                          <select id='week_id' name="weeks" class="form-control" data-toggle="tooltip"
+                            data-trigger="hover" data-placement="top" data-title="Priority">
+                            <option value="">--------------------------SELECT----------------------------</option>
+                          </select>
+
+                          <!-- second select populated with response from ajax -->
+                          <!-- <select id='second-select' name="weeks" class="form-control" data-toggle="tooltip" data-trigger="hover"
+                    data-placement="top" data-title="Priority" ></select> -->
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="form-group col-12 mb-2">
+                          <label for="issueinput6">select Time Slot: </label>
+                          <select id="timeslot_id" name="timeslot" class="form-control" data-toggle="tooltip"
+                            data-trigger="hover" data-placement="top" data-title="Status">
+                            <option value="">--------------------------SELECT----------------------------</option>
+                          </select>
+                          <!-- <select id='timeslot_id' name="weeks" class="form-control" data-toggle="tooltip"
+                            data-trigger="hover" data-placement="top" data-title="Priority"></select> -->
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group col-12 mb-2">
+                          <label for="issueinput5">Description: </label><br>
+                          <textarea name="description" id="" cols="58" rows="5"></textarea>
+                        </div>
+                      </div>
+                      <div class="form-actions" style="padding-left:200px ;">
+
+                        <button type="submit" class="btn btn-raised btn-success">
+                          <i class="fa fa-check-square-o"></i> Book
+                        </button>
+                      </div>
+
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+
+      </section>
+      <!-- // Form actions layout section end -->
+
+    </div>
+  </div>
+  <!-- END : End Main Content-->
+
+  {% endblock %}
+  {% block js %}
+  <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <script type="text/javascript">
+    // $(document).ready(function() {
+    $('#doc').change(function () {
+      var optionSelected = $(this).find("option:selected");
+      var valueSelected = optionSelected.val();
+      var doctor_name = optionSelected.text();
+
+      // doc ={'doc_n':doctor_name};
+      console.log(valueSelected)
+      $.ajax({
+        type: "GET",
+        url: '{% url "get-slot-list" %}',
+        // data:JSON.stringify(data),
+        data: { 'doc_n': valueSelected },
+        success: function (result) {
+          // console.log(doctor_name);
+          console.log(result, '==========');
+
+          var secondSelect = $('#week_id');
+          secondSelect.empty();
+
+          console.log(Object.values(result.instances), 'eee')
+          var s = Object.values(result.instances)
+          console.log(s.length, '===================');
+          for (i = 0; i < s.length; i++) {
+            if (s[i].weeks == 0) {
+              var week = "Monday"
+            }
+            else if (s[i].weeks == 1) {
+              var week = "Tuesday"
+            }
+            else if (s[i].weeks == 2) {
+              var week = "Wednesday"
+            }
+            else if (s[i].weeks == 3) {
+              var week = "Thursday"
+            }
+            else if (s[i].weeks == 4) {
+              var week = "Friday"
+            }
+            else if (s[i].weeks == 5) {
+              var week = "Saturday"
+            }
+            else {
+              var week = "Sunday"
+            }
+            secondSelect.append($('<option>', { value: s[i].weeks, text: week }));
+            console.log(i, '-=-=-=-=-=-=--=-=');
+
+          }
+
+        }
+      });
+    });
+  </script>
+  <script type="text/javascript">
+    // $(document).ready(function() {
+    $('#week_id').change(function () {
+      var optionSelected = $(this).find("option:selected");
+      var valueSelected = optionSelected.val();
+      var doc_select = $('#doc').find("option:selected");
+      var doc_value = doc_select.val();
+      var weeks = optionSelected.text();
+      console.log(valueSelected)
+      console.log(doc_value)
+      $.ajax({
+        type: "GET",
+        url: '{% url "get-slot-list" %}',
+        data: { 'week_n': valueSelected, 'doc_v': doc_value },
+        success: function (result) {
+          console.log(result, '==========');
+
+          var secondSelect = $('#timeslot_id');
+          secondSelect.empty();
+
+          console.log(Object.values(result.instances1), 'eee')
+          var s1 = Object.values(result.instances1)
+          console.log(s1.length, '==========lengt\=========');
+          for (i = 0; i < s1.length; i++) {
+            if (s1[i].timeslot == 0) {
+              var timeslot = "09:00 am To 10:00 am"
+            }
+            else if (s1[i].timeslot == 1) {
+              var timeslot = "10:00 am TO 11:00 am"
+            }
+            else if (s1[i].timeslot == 2) {
+              var timeslot = "11:00 am To 12:00 am"
+            }
+            else if (s1[i].timeslot == 3) {
+              var timeslot = "12:00 am To 01:00 pm"
+            }
+            else if (s1[i].timeslot == 4) {
+              var timeslot = "02:00 pm To 03:00 pm"
+            }
+            else if (s1[i].timeslot == 5) {
+              var timeslot = "03:00 pm To 04:00 pm"
+            }
+            else if (s1[i].timeslot == 6) {
+              var timeslot = "04:00 pm To 05:00 pm"
+            }
+            secondSelect.append($('<option>', { value: s1[i].timeslot, text:timeslot }));
+            console.log(s1[i].timeslot, '-=-=-=-=-=-=--=-=');
+            
+          }
+
+        }
+      });
+    });
+  </script>
+  {% endblock %}

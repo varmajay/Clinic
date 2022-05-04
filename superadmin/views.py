@@ -1,6 +1,8 @@
+from calendar import week
+import json
 import email
 from itertools import count
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.conf import settings
 from django.core.mail import send_mail
@@ -10,6 +12,14 @@ from django.core.mail import send_mail
 from .models import *
 
 # Create your views here.
+
+
+def main_index(request):
+    return render(request,'main-index.html')
+
+
+
+
 def index(request):
     uid = User.objects.get(email=request.session['email'])
     return render(request,'index.html')
@@ -63,12 +73,12 @@ def login(request):
 
 def logout(request):
     del request.session['email']
-    return redirect('login')
+    return redirect('main-index')
 
 
 
 
-#-----------------------------Doctor----------------------------# 
+#--------------------------------------------------Doctor------------------------------------------------------# 
 def create_doctor(request):
     if request.method == "POST":
         try:
@@ -134,7 +144,7 @@ def profile_doc(request):
 
 
 
-#----------------------------patient---------------------------------#
+#---------------------------------------------------------patient-----------------------------------------------#
 
 def create_patient(request):
     if request.method == "POST":
@@ -198,3 +208,96 @@ def profile_pat(request):
             uid.profile = request.FILES['profile']
         uid.save()
     return render(request,'profile-pat.html',{'uid':uid})
+
+
+
+
+
+#----------------------------------------------------------slot---------------------------------------------------#
+def slot(request):
+    uid = Slot.objects.all()
+    data = User.objects.get(email = request.session['email'])
+    if request.method == 'POST':
+        Slot.objects.create(
+            doctor_id = data,
+            weeks = request.POST['weeks'],
+            timeslot = request.POST['timeslot']
+        )
+    return render(request,'slot.html',{'uid':uid})
+
+
+def slot_view(request):
+    sess = User.objects.get(email=request.session['email'])
+    uid = Slot.objects.all().order_by('weeks')
+    # print(uid.doctor_name)
+    return render(request,'slot-view.html',{'uid':uid,'sess':sess})
+
+
+def slot_update(request,pk):
+    uid = Slot.objects.get(id=pk)
+    if request.method == 'POST':
+        uid.weeks = request.POST['weeks']
+        uid.timeslot = request.POST['timeslot']
+        uid.save()
+    return render(request,'slot-update.html',{'uid':uid})
+
+def slot_delete(request,pk):
+    slot = Slot.objects.get(id=pk)
+    slot.delete()
+    return redirect('slot-view')
+
+
+
+
+
+
+
+
+#-----------------------------------------------------Appoinment---------------------------------------------#
+
+def book_app(request):
+    book = User.objects.filter(roles='doctor')
+    slot = Slot.objects.all().order_by('weeks')
+    
+    return render(request,'book-app.html',{'book':book,'slot':slot})
+
+def create_book_app(request):
+    # print(request.POST['weeks'])
+    # print(request.POST['timeslot'])
+    # print(request.POST['slot_id'])
+    pat = User.objects.get(email=request.session['email'])
+    getslot = Slot.objects.get(id = request.POST['slot_id']) 
+    if request.method == "POST":
+        Appoinment.objects.create(
+            slot = getslot, 
+            patients_id = pat.id,
+            patient_name = pat.name,
+            weeks = request.POST['weeks'],
+            timeslot = request.POST['timeslot'],
+            description = request.POST['description'],
+        )
+    return redirect('book-app')
+
+
+
+def book_app_view(request):
+    return render(request,'book-app-view.html')
+
+
+
+def get_slot_list(request):
+    # print(request.GET.get("doc_n"),'-----------------------')
+    week_n = request.GET.get("week_n")
+    doc_v = request.GET.get("doc_v")
+    # print("week_n",week_n)
+    # print("week_n",doc_v)
+    # book = User.objects.filter(roles='doctor')
+    slot = Slot.objects.filter(doctor_id = request.GET.get("doc_n")).order_by('weeks').values('weeks')
+    slot1 = Slot.objects.filter(weeks = week_n).filter(doctor_id=doc_v).order_by('timeslot').values('id','timeslot')
+    # print(slot1)
+    return JsonResponse({
+        "instances" : list(slot),
+        "instances1" : list(slot1)
+    })
+    
+    # return HttpResponse(slot)

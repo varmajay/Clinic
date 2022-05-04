@@ -1,0 +1,119 @@
+ 
+{% extends 'header-doc.html'%}
+{% load static %}
+{% block content %}
+
+<style>
+  table {
+  counter-reset: 0;
+}
+
+table tr {
+  counter-increment: rowNumber;
+}
+
+table tr td:first-child::before {
+  content: counter(rowNumber);
+  min-width: 1em;
+  margin-right: 0.5em;
+}
+</style>
+
+
+      <div class="main-panel">
+        <!-- BEGIN : Main Content-->
+        <div class="main-content">
+          <div class="content-wrapper"><div class="row">
+  <div class="col-12">
+    <div class="content-header">Doctor</div>
+  </div>
+</div>
+
+<!--Striped rows Inverse Starts-->
+<section id="striped-inverse">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">View slot</h4>
+        </div>
+        <div class="card-content">
+          <div class="card-body">
+            <table class="table table-striped table-dark">
+              <thead>
+                <tr>
+                  <th>NO</th>
+                  
+                  
+                  <th>weeks</th>
+                  <th>Time Slot</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  
+                  {% for slot in uid %}
+                  {% if slot.doctor_id.id == sess.id %}
+                  <td></td>
+                  
+                  {% if slot.weeks == 0 %}
+                  <td>Monday</td>
+                  {% elif slot.weeks == 1 %}
+                  <td>Tuesday</td>
+                  {% elif slot.weeks == 2 %}
+                  <td>Wednesday</td>
+                  {% elif slot.weeks == 3 %}
+                  <td>Thursday</td>
+                  {% elif slot.weeks == 4 %}
+                  <td>Friday</td>
+                  {% elif slot.weeks == 5 %}
+                  <td>Saturday</td>
+                  {% else %}
+                  <td>Sunday</td>
+                  {% endif %}
+
+                  {% if slot.timeslot == 0 %}
+                  <td>09:00 am To 10:00 am</td>
+                  {% elif slot.timeslot == 1 %}
+                  <td>10:00 am TO 11:00 am</td>
+                  {% elif slot.timeslot == 2 %}
+                  <td>11:00 am To 12:00 am</td>
+                  {% elif slot.timeslot == 3 %}
+                  <td>12:00 am To 01:00 pm</td>
+                  {% elif slot.timeslot == 4 %}
+                  <td>02:00 pm To 03:00 pm</td>
+                  {% elif slot.timeslot == 5 %}
+                  <td>03:00 pm To 04:00 pm</td>
+                  {% elif slot.timeslot == 6 %}
+                  <td>04:00 pm To 05:00 pm</td>
+                  {% endif %}
+                  <td>
+                    <a href="{% url 'slot-update' slot.id %}" class="success p-0" data-original-title="" title="">
+                      <i class="ft-edit font-medium-3 mr-2"></i>
+                    </a>
+                  </td>
+                  <td>
+                    <a href="{% url 'slot-delete' slot.id %}" class="danger p-0" data-original-title="" title="">
+                      <i class="ft-trash-2 font-medium-3 mr-2"></i>
+                    </a>
+                  </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Striped rows Inverse Ends-->
+          </div>
+        </div><br>
+       
+
+        <!-- END : End Main Content-->
+{% endblock %}

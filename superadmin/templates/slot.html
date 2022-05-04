@@ -1,0 +1,75 @@
+{% extends 'header-doc.html '%}
+{% block content %}
+<div class="main-panel">
+        <!-- BEGIN : Main Content-->
+        <div class="main-content">
+          <div class="content-wrapper"><!-- Basic Dropdowns start -->
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="content-header">Slot</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5">
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="card-title" id="horz-layout-basic">Add Slot</h4><br><br>
+                  </div>
+                  <div class="card-content">
+                    <div class="px-3">
+                      <form class="form form-horizontal" action="{% url 'slot'%}" method="post">
+                        {% csrf_token %} 
+                          <div class="form-group row">
+                            <label class="col-md-3 label-control" for="projectinput7">Weeks : </label>
+                            <div class="col-md-9">
+                              <select id="projectinput7" name="weeks" class="form-control">
+                                
+                                <option value="0">Monday</option>
+                                <option value="1">Tuesday</option>
+                                <option value="2">Wednesday</option>
+                                <option value="3">Thursday</option>
+                                <option value="4">Friday</option>
+                                <option value="5">Saturday</option>
+                                <option value="6">Sunday</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-md-3 label-control" for="projectinput6">Time Slot: </label>
+                            <div class="col-md-9">
+                              <select id="projectinput6" name="timeslot" class="form-control">
+                                <option value="0">09:00 am To 10:00 am</option>
+                                <option value="1">10:00 am TO 11:00 am</option>
+                                <option value="2">11:00 am To 12:00 am</option>
+                                <option value="3">12:00 am To 01:00 pm</option>
+                                <option value="4">02:00 pm To 03:00 pm</option>
+                                <option value="5">03:00 pm To 04:00 pm</option>
+                                <option value="6">04:00 pm To 05:00 pm</option>
+                                
+                              </select>
+                            </div>
+                          </div>
+          
+                          <br>
+                          
+                        <div class="form-actions" style="padding-left: 120px;" >
+                          <button type="button" class="btn btn-raised btn-warning mr-1">
+                            <i class="ft-x"></i> Cancel
+                          </button>
+                          <button type="submit" class="btn btn-raised btn-primary">
+                            <i class="fa fa-check-square-o"></i> Add
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <br>
+        <!-- END : End Main Content-->
+{% endblock %}
+       

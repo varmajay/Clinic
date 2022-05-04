@@ -1,0 +1,179 @@
+{% extends 'header-doc.html '%}
+{% block content %}
+<div class="main-panel">
+        <!-- BEGIN : Main Content-->
+        <div class="main-content">
+          <div class="content-wrapper"><!-- Basic Dropdowns start -->
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="content-header">Slot</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5">
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="card-title" id="horz-layout-basic">Update Slot</h4><br><br>
+                  </div>
+                  <div class="card-content">
+                    <div class="px-3">
+                      <form class="form form-horizontal" action="{% url 'slot-update' uid.id %}" method="post">
+                        {% csrf_token %}
+                          
+          
+                         
+                          <div class="form-group row">
+                            <label class="col-md-3 label-control" for="projectinput7">Weeks : </label>
+                            <div class="col-md-9">
+                              <select id="projectinput7" name="weeks" class="form-control">
+                                {% if uid.weeks == 0 %}
+                                <option value="0" selected>Monday</option>
+                                <option value="1">Tuesday</option>
+                                <option value="2">Wednesday</option>
+                                <option value="3">Thursday</option>
+                                <option value="4">Friday</option>
+                                <option value="5">Saturday</option>
+                                <option value="6">Sunday</option>
+                                {% elif uid.weeks == 0 %}
+                                <option value="0">Monday</option>
+                                <option value="1" selected>Tuesday</option>
+                                <option value="2">Wednesday</option>
+                                <option value="3">Thursday</option>
+                                <option value="4">Friday</option>
+                                <option value="5">Saturday</option>
+                                <option value="6">Sunday</option>
+                                {% elif uid.weeks == 0 %}
+                                <option value="0">Monday</option>
+                                <option value="1">Tuesday</option>
+                                <option value="2" selected>Wednesday</option>
+                                <option value="3">Thursday</option>
+                                <option value="4">Friday</option>
+                                <option value="5">Saturday</option>
+                                <option value="6">Sunday</option>
+                                {% elif uid.weeks == 0 %}
+                                <option value="0">Monday</option>
+                                <option value="1">Tuesday</option>
+                                <option value="2">Wednesday</option>
+                                <option value="3" selected>Thursday</option>
+                                <option value="4">Friday</option>
+                                <option value="5">Saturday</option>
+                                <option value="6">Sunday</option>
+                                {% elif uid.weeks == 0 %}
+                                <option value="0">Monday</option>
+                                <option value="1">Tuesday</option>
+                                <option value="2">Wednesday</option>
+                                <option value="3">Thursday</option>
+                                <option value="4" selected>Friday</option>
+                                <option value="5">Saturday</option>
+                                <option value="6">Sunday</option>
+                                {% elif uid.weeks == 0 %}
+                                <option value="0">Monday</option>
+                                <option value="1">Tuesday</option>
+                                <option value="2">Wednesday</option>
+                                <option value="3">Thursday</option>
+                                <option value="4">Friday</option>
+                                <option value="5" selected>Saturday</option>
+                                <option value="6">Sunday</option>
+                                {% else %}
+                                <option value="0">Monday</option>
+                                <option value="1">Tuesday</option>
+                                <option value="2">Wednesday</option>
+                                <option value="3">Thursday</option>
+                                <option value="4">Friday</option>
+                                <option value="5">Saturday</option>
+                                <option value="6" selected >Sunday</option>
+                                {% endif %}
+                              </select>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-md-3 label-control" for="projectinput6">Time Slot: </label>
+                            <div class="col-md-9">
+                              <select id="projectinput6" name="timeslot" class="form-control">
+                                {% if timeslot == 0 %}
+                                <option value="0" selected>09:00 am To 10:00 am</option>
+                                <option value="1">10:00 am TO 11:00 am</option>
+                                <option value="2">11:00 am To 12:00 am</option>
+                                <option value="3">12:00 am To 01:00 pm</option>
+                                <option value="4">02:00 pm To 03:00 pm</option>
+                                <option value="5">03:00 pm To 04:00 pm</option>
+                                <option value="6">04:00 pm To 05:00 pm</option>
+                                {% elif timeslot == 1 %}
+                                <option value="0">09:00 am To 10:00 am</option>
+                                <option value="1" selected>10:00 am TO 11:00 am</option>
+                                <option value="2">11:00 am To 12:00 am</option>
+                                <option value="3">12:00 am To 01:00 pm</option>
+                                <option value="4">02:00 pm To 03:00 pm</option>
+                                <option value="5">03:00 pm To 04:00 pm</option>
+                                <option value="6">04:00 pm To 05:00 pm</option>
+                                {% elif timeslot == 2 %}
+                                <option value="0">09:00 am To 10:00 am</option>
+                                <option value="1">10:00 am TO 11:00 am</option>
+                                <option value="2" selected>11:00 am To 12:00 am</option>
+                                <option value="3">12:00 am To 01:00 pm</option>
+                                <option value="4">02:00 pm To 03:00 pm</option>
+                                <option value="5">03:00 pm To 04:00 pm</option>
+                                <option value="6">04:00 pm To 05:00 pm</option>
+                                {% elif timeslot == 3 %}
+                                <option value="0">09:00 am To 10:00 am</option>
+                                <option value="1">10:00 am TO 11:00 am</option>
+                                <option value="2">11:00 am To 12:00 am</option>
+                                <option value="3" selected>12:00 am To 01:00 pm</option>
+                                <option value="4">02:00 pm To 03:00 pm</option>
+                                <option value="5">03:00 pm To 04:00 pm</option>
+                                <option value="6">04:00 pm To 05:00 pm</option>
+                                {% elif timeslot == 4 %}
+                                <option value="0">09:00 am To 10:00 am</option>
+                                <option value="1">10:00 am TO 11:00 am</option>
+                                <option value="2">11:00 am To 12:00 am</option>
+                                <option value="3">12:00 am To 01:00 pm</option>
+                                <option value="4" selected>02:00 pm To 03:00 pm</option>
+                                <option value="5">03:00 pm To 04:00 pm</option>
+                                <option value="6">04:00 pm To 05:00 pm</option>
+                                {% elif timeslot == 5 %}
+                                <option value="0">09:00 am To 10:00 am</option>
+                                <option value="1">10:00 am TO 11:00 am</option>
+                                <option value="2">11:00 am To 12:00 am</option>
+                                <option value="3">12:00 am To 01:00 pm</option>
+                                <option value="4">02:00 pm To 03:00 pm</option>
+                                <option value="5" selected>03:00 pm To 04:00 pm</option>
+                                <option value="6">04:00 pm To 05:00 pm</option>
+                                {% else %}
+                                <option value="0">09:00 am To 10:00 am</option>
+                                <option value="1">10:00 am TO 11:00 am</option>
+                                <option value="2">11:00 am To 12:00 am</option>
+                                <option value="3">12:00 am To 01:00 pm</option>
+                                <option value="4">02:00 pm To 03:00 pm</option>
+                                <option value="5">03:00 pm To 04:00 pm</option>
+                                <option value="6" selected>04:00 pm To 05:00 pm</option>
+                                {% endif %}
+                                
+                              </select>
+                            </div>
+                          </div>
+          
+                          <br>
+                          
+                        <div class="form-actions" style="padding-left: 120px;" >
+                          <button type="button" class="btn btn-raised btn-warning mr-1">
+                            <i class="ft-x"></i> Cancel
+                          </button>
+                          <button type="submit" class="btn btn-raised btn-primary">
+                            <i class="fa fa-check-square-o"></i> Update
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          </div>
+          <br>
+          <!-- END : End Main Content-->
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+          
+  
+{% endblock %}
