@@ -22,22 +22,21 @@ def main_index(request):
 
 def index(request):
     uid = User.objects.get(email=request.session['email'])
-    return render(request,'index.html')
+    return render(request,'index.html',{'uid':uid})
 
 def index_doc(request):
-    return render(request,'index-doc.html')
+    uid = User.objects.get(email=request.session['email'])
+    return render(request,'index-doc.html',{'uid':uid})
 
 def index_pat(request):
-    return render(request,'index-pat.html')
+    uid = User.objects.get(email=request.session['email'])
+    return render(request,'index-pat.html',{'uid':uid})
 
 
 
 
 def login(request):
-    
-    # Admin login
         try:
-            
             uid = User.objects.get(email=request.session['email'])
             if uid.roles == "admin":
                 return redirect('index')
@@ -46,7 +45,7 @@ def login(request):
             else:
                 return redirect('index-pat')
         except:
-            print(User.roles)
+            # print(User.roles)
             if request.method == 'POST':
                 try:
                     uid = User.objects.get(email=request.POST['email'])
@@ -66,7 +65,8 @@ def login(request):
                             return redirect('index-pat')
                         return render(request,'login.html',{'msg':'Please Enter Valid Password'})
                 except:
-                    return render(request,'login.html')
+                    msg = "Please Enter Valid Email"
+                    return render(request,'login.html',{'msg':msg})
         return render(request,'login.html') 
 
 
@@ -100,7 +100,7 @@ def create_doctor(request):
                 email = request.POST['email'],
                 password = password,
             )
-
+        return 
     return render(request,'create-doctor.html')
 
 
@@ -265,11 +265,14 @@ def create_book_app(request):
     # print(request.POST['weeks'])
     # print(request.POST['timeslot'])
     # print(request.POST['slot_id'])
+    doc_v = request.GET.get("doc_v")
     pat = User.objects.get(email=request.session['email'])
-    getslot = Slot.objects.get(id = request.POST['slot_id']) 
+    getslot = Slot.objects.get(weeks=request.POST['weeks'], timeslot = request.POST['timeslot'])
+    # print(getslot,'---------------------svkj sj--------nc hzc')
+    # print(getslot,'hekkojz ffcz')
     if request.method == "POST":
         Appoinment.objects.create(
-            slot = getslot, 
+            slot = getslot,
             patients_id = pat.id,
             patient_name = pat.name,
             weeks = request.POST['weeks'],
@@ -281,7 +284,9 @@ def create_book_app(request):
 
 
 def book_app_view(request):
-    return render(request,'book-app-view.html')
+    pat = User.objects.get(email= request.session['email'])
+    uid = Appoinment.objects.filter(patients_id=pat.id)
+    return render(request,'book-app-view.html',{'uid':uid})
 
 
 
@@ -301,3 +306,19 @@ def get_slot_list(request):
     })
     
     # return HttpResponse(slot)
+
+
+
+
+
+def view_appoinment(request):
+    doc = User.objects.get(email= request.session['email'])
+    # print("ddd",doc)
+    # slot = Slot.objects.filter(doctor_id=doc.id)
+    # print(slot)
+
+    uid = Appoinment.objects.filter(slot__doctor_id=doc.id)
+    # print(uid)
+    return render(request,'view-appoinment.html',{'uid':uid,'doc':doc})
+
+

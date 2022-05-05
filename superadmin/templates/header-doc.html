@@ -73,9 +73,7 @@
               </li>
               <li class="has-sub nav-item"><a href="#"><i class="ft-grid"></i><span data-i18n="" class="menu-title">Appoinment</span></a>
                 <ul class="menu-content">
-                  <li><a href="grids.html" class="menu-item">Grid</a>
-                  </li>
-                  <li><a href="typography.html" class="menu-item">Typography</a>
+                  <li><a href="{% url 'view-appoinment'%}" class="menu-item">View Appoinment </a>
                   </li>
                 </ul>
               </li>
@@ -103,7 +101,7 @@
               </div>
             </form>
           </div>
-          <marquee direction="side" height="30" width="600" style="color: blue;"> <h3><b>Hello , welcome to  "Clinic"</b></h3> </marquee>
+          <marquee direction="side" height="30" width="600" style="color: blue;"> <h3><b>Hello {{uid.name}} , welcome to  "Clinic"</b></h3> </marquee>
           <div class="navbar-container">
             <div id="navbarSupportedContent" class="collapse navbar-collapse">
               <ul class="navbar-nav">

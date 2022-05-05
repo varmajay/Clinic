@@ -32,9 +32,10 @@ urlpatterns = [
 
 
     #----------------------------Appoinment------------------------------#
-    path('book-app',views.book_app,name='book-app'),
-    path('create-book-app',views.create_book_app,name='create-book-app'),
-    path('book-app-view',views.book_app_view,name='book-app-view'),
-    path('get-slot-list',views.get_slot_list,name='get-slot-list'),
+    path('book-app/',views.book_app,name='book-app'),
+    path('create-book-app/',views.create_book_app,name='create-book-app'),
+    path('book-app-view/',views.book_app_view,name='book-app-view'),
+    path('get-slot-list/',views.get_slot_list,name='get-slot-list'),
+    path('view-appoinment/',views.view_appoinment,name='view-appoinment'),
 
 ]

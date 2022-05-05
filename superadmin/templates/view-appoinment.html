@@ -1,5 +1,5 @@
  
-{% extends 'header-pat.html'%}
+{% extends 'header-doc.html'%}
 {% load static %}
 {% block content %}
 
@@ -43,7 +43,7 @@ table tr td:first-child::before {
               <thead>
                 <tr>
                   <th>NO</th>
-                  <th>Doctor Name</th>
+                  <th>Patient Name</th>
                   <th>Weeks</th>
                   <th>Timeslot</th>
                   <th>Description</th>
@@ -56,7 +56,7 @@ table tr td:first-child::before {
                 <tr>
                   {% for app in uid %}
                   <td></td>
-                  <td>{{app.slot.doctor_id.name}}</td>
+                  <td>{{app.patient_name}}</td>
                   {% if app.slot.weeks == 0 %}
                   <td>Monday</td>
                   {% elif app.slot.weeks == 1 %}
@@ -95,6 +95,8 @@ table tr td:first-child::before {
                       <button type="button" class="btn btn-raised btn-primary btn-min-width dropdown-toggle"
                         data-toggle="dropdown" >Action</button>
                       <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#" style="color: green;">Completed</a>
+                        <a class="dropdown-item" href="#" style="color:red">Absent</a>
                         <a class="dropdown-item" href="#" style="color: red;">Canceled</a>
                     </div>
                   </td>
