@@ -95,19 +95,27 @@ table tr td:first-child::before {
                       <button type="button" class="btn btn-raised btn-primary btn-min-width dropdown-toggle"
                         data-toggle="dropdown" >Action</button>
                       <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#" style="color: green;">Completed</a>
-                        <a class="dropdown-item" href="#" style="color:red">Absent</a>
-                        <a class="dropdown-item" href="#" style="color: red;">Canceled</a>
+                        <a class="dropdown-item" href="{% url 'status-complete' app.id %}" style="color: green;">Completed</a>
+                        <a class="dropdown-item" href="{% url 'status-absent' app.id %}"" style="color:red">Absent</a>
+                        <a class="dropdown-item" href="{% url 'status-cancelled' app.id %}"" style="color: red;">Canceled</a>
                     </div>
                   </td>
                   {% if app.status == 0 %}
-                  <td style="color: grey;">Pending</td>
+                  <td>
+                    <a class="btn white btn-round btn-primary">Pending</a>
+                  </td>
                   {% elif app.status == 1 %}
-                  <td style="color:green">Completed</td>
+                  <td>
+                    <a class="btn white btn-round btn-success">Completed</a>
+                  </td>
                   {% elif app.status == 2 %}
-                  <td style="color: red">Absent</td>
+                  <td>
+                    <a class="btn white btn-round btn-danger">Absent</a>
+                  </td>
                   {% elif app.status == 3 %}
-                  <td style="color: red">Cancelled</td>
+                  <td>
+                    <a class="btn white btn-round btn-danger">Cancelled</a>
+                  </td>
                   {% endif %}
                 </tr>
                   {% endfor %}

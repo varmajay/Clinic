@@ -283,12 +283,6 @@ def create_book_app(request):
 
 
 
-def book_app_view(request):
-    pat = User.objects.get(email= request.session['email'])
-    uid = Appoinment.objects.filter(patients_id=pat.id)
-    return render(request,'book-app-view.html',{'uid':uid})
-
-
 
 def get_slot_list(request):
     # print(request.GET.get("doc_n"),'-----------------------')
@@ -308,10 +302,15 @@ def get_slot_list(request):
     # return HttpResponse(slot)
 
 
+def book_app_view(request):   #PATIENTS
+    pat = User.objects.get(email= request.session['email'])
+    uid = Appoinment.objects.filter(patients_id=pat.id)
+    return render(request,'book-app-view.html',{'uid':uid})
 
 
 
-def view_appoinment(request):
+
+def view_appoinment(request): #DOCTOR
     doc = User.objects.get(email= request.session['email'])
     # print("ddd",doc)
     # slot = Slot.objects.filter(doctor_id=doc.id)
@@ -322,3 +321,28 @@ def view_appoinment(request):
     return render(request,'view-appoinment.html',{'uid':uid,'doc':doc})
 
 
+
+
+
+
+#----------------------------------------------Status-action-------------------------------------------------#
+
+def status_complete(request,pk):
+    uid = Appoinment.objects.get(id=pk)
+    uid.status = 1
+    uid.save()
+    return redirect('view-appoinment')
+
+
+def status_absent(request,pk):
+    uid = Appoinment.objects.get(id=pk)
+    uid.status = 2
+    uid.save()
+    return redirect('view-appoinment')
+
+
+def status_cancelled(request,pk):
+    uid = Appoinment.objects.get(id=pk)
+    uid.status = 3
+    uid.save()
+    return redirect('view-appoinment')

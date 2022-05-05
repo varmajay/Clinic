@@ -99,13 +99,21 @@ table tr td:first-child::before {
                     </div>
                   </td>
                   {% if app.status == 0 %}
-                  <td style="color: grey;">Pending</td>
+                  <td>
+                    <a class="btn white btn-round btn-primary">Pending</a>
+                  </td>
                   {% elif app.status == 1 %}
-                  <td style="color:green">Completed</td>
+                  <td>
+                    <a class="btn white btn-round btn-success">Completed</a>
+                  </td>
                   {% elif app.status == 2 %}
-                  <td style="color: red">Absent</td>
+                  <td>
+                    <a class="btn white btn-round btn-danger">Absent</a>
+                  </td>
                   {% elif app.status == 3 %}
-                  <td style="color: red">Cancelled</td>
+                  <td>
+                    <a class="btn white btn-round btn-danger">Cancelled</a>
+                  </td>
                   {% endif %}
                 </tr>
                   {% endfor %}

@@ -38,4 +38,9 @@ urlpatterns = [
     path('get-slot-list/',views.get_slot_list,name='get-slot-list'),
     path('view-appoinment/',views.view_appoinment,name='view-appoinment'),
 
+    #------------------------------Status-action--------------------------#
+    path('status-complete/<int:pk>',views.status_complete,name='status-complete'),
+    path('status-absent/<int:pk>',views.status_absent,name='status-absent'),
+    path('status-cancelled/<int:pk>',views.status_cancelled,name='status-cancelled'),
+
 ]

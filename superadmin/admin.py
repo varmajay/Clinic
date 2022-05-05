@@ -16,4 +16,4 @@ class AdminSlot(admin.ModelAdmin):
 
 @admin.register(Appoinment)
 class AdminAppoinment(admin.ModelAdmin):
-    list_display =['slot','patient_name']
+    list_display =['id','slot','patient_name']
