@@ -70,7 +70,7 @@ class Appoinment(models.Model):
         (2,'Absent'),
         (3,'Canceled'),
     ) 
-    slot = models.ForeignKey(Slot,on_delete=models.CASCADE)    
+    slot = models.ForeignKey(Slot,related_name='slots',on_delete=models.CASCADE)    
     patients_id = models.IntegerField()
     patient_name = models.CharField(max_length=30)
     weeks = models.IntegerField()

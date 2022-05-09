@@ -1,5 +1,5 @@
  
-{% extends 'header-pat.html'%}
+{% extends 'header.html'%}
 {% load static %}
 {% block content %}
 
@@ -44,11 +44,12 @@ table tr td:first-child::before {
                 <tr>
                   <th>NO</th>
                   <th>Doctor Name</th>
+                  <th>Patient Name</th>
                   <th>Weeks</th>
                   <th>Timeslot</th>
                   <th>Description</th>
-                  <th>Action</th>
                   <th>Status</th>
+                  
                 </tr>
               </thead>
               <tbody>
@@ -57,6 +58,7 @@ table tr td:first-child::before {
                   {% for app in uid %}
                   <td></td>
                   <td>{{app.slot.doctor_id.name}}</td>
+                  <td>{{app.patient_name}}</td>
                   {% if app.slot.weeks == 0 %}
                   <td>Monday</td>
                   {% elif app.slot.weeks == 1 %}
@@ -90,18 +92,6 @@ table tr td:first-child::before {
                   {% endif %}
 
                   <td>{{app.description}}</td>
-                  <td>
-                    <div class="btn-group mr-1 mb-1">
-                      <button type="button" class="btn btn-raised btn-primary btn-min-width dropdown-toggle"
-                        data-toggle="dropdown" >Action</button>
-                      <div class="dropdown-menu" di>
-                        {% if app.status == 3 or 1 %}
-                        <a class="dropdown-item" href="" style="color: red;">Canceled</a>
-                        {% else %}
-                        <a class="dropdown-item" href="{% url 'pat-status-cancelled' app.id %}" style="color: red;">Canceled</a>
-                        {% endif %}
-                    </div>
-                  </td>
                   {% if app.status == 0 %}
                   <td>
                     <a class="btn white btn-round btn-primary">Pending</a>
@@ -119,6 +109,7 @@ table tr td:first-child::before {
                     <a class="btn white btn-round btn-danger">Cancelled</a>
                   </td>
                   {% endif %}
+                  
                 </tr>
                   {% endfor %}
               </tbody>

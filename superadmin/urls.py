@@ -37,10 +37,13 @@ urlpatterns = [
     path('book-app-view/',views.book_app_view,name='book-app-view'),
     path('get-slot-list/',views.get_slot_list,name='get-slot-list'),
     path('view-appoinment/',views.view_appoinment,name='view-appoinment'),
+    #Admin view appoinment #
+    path('view-appoinment-admin/',views.view_appoinment_admin,name='view-appoinment-admin'),
 
     #------------------------------Status-action--------------------------#
     path('status-complete/<int:pk>',views.status_complete,name='status-complete'),
     path('status-absent/<int:pk>',views.status_absent,name='status-absent'),
     path('status-cancelled/<int:pk>',views.status_cancelled,name='status-cancelled'),
+    path('pat-status-cancelled/<int:pk>',views.pat_status_cancelled,name='pat-status-cancelled'),
 
 ]

@@ -9,7 +9,7 @@
       <section id="form-action-layouts">
         <div class="row">
           <div class="col-sm-12">
-            <div class="content-header"> Appoinment Booking </div>
+            <div class="content-header"> Appoinment Booking </div> 
           </div>
         </div>
 
@@ -26,7 +26,7 @@
 
                   <form class="form" action="{% url 'create-book-app'%}" method="post">
                     {% csrf_token %}
-                    
+
                     <!-- <input type="text" name="slot_id" value="{{slot.id}}"> -->
                     <div class="form-body">
                       <input type="hidden" value="{{book.id}}" id="doc_id">
@@ -74,8 +74,7 @@
                           <textarea name="description" id="" cols="58" rows="5"></textarea>
                         </div>
                       </div>
-                      <div class="form-actions" style="padding-left:200px ;">
-
+                      <div class="form-actions center">
                         <button type="submit" class="btn btn-raised btn-success">
                           <i class="fa fa-check-square-o"></i> Book
                         </button>
@@ -122,33 +121,42 @@
           var secondSelect = $('#week_id');
           secondSelect.empty();
 
-          console.log(Object.values(result.instances), 'eee')
+          // console.log(Object.values(result.instances), 'eee')
           var s = Object.values(result.instances)
-          console.log(s.length, '===================');
-          for (i = 0; i < s.length; i++) {
-            if (s[i].weeks == 0) {
+          console.log(s,'--------------------------');
+
+          // console.log(s.length, '===================');
+          let slot = s.map((element) => {
+            return element.weeks
+          })
+          slot = [...new Set(slot)]
+          console.log(slot);
+          for (i = 0; i < slot.length; i++) {
+
+
+            if (slot[i] == 0) {
               var week = "Monday"
             }
-            else if (s[i].weeks == 1) {
+            else if (slot[i] == 1) {
               var week = "Tuesday"
             }
-            else if (s[i].weeks == 2) {
+            else if (slot[i] == 2) {
               var week = "Wednesday"
             }
-            else if (s[i].weeks == 3) {
+            else if (slot[i] == 3) {
               var week = "Thursday"
             }
-            else if (s[i].weeks == 4) {
+            else if (slot[i] == 4) {
               var week = "Friday"
             }
-            else if (s[i].weeks == 5) {
+            else if (slot[i] == 5) {
               var week = "Saturday"
             }
             else {
               var week = "Sunday"
             }
-            secondSelect.append($('<option>', { value: s[i].weeks, text: week }));
-            console.log(i, '-=-=-=-=-=-=--=-=');
+            secondSelect.append($('<option>', { value: slot[i], text: week }));
+            // console.log(i, '-=-=-=-=-=-=--=-=');
 
           }
 
@@ -164,21 +172,21 @@
       var doc_select = $('#doc').find("option:selected");
       var doc_value = doc_select.val();
       var weeks = optionSelected.text();
-      console.log(valueSelected)
-      console.log(doc_value)
+      // console.log(valueSelected)
+      // console.log(doc_value)
       $.ajax({
         type: "GET",
         url: '{% url "get-slot-list" %}',
         data: { 'week_n': valueSelected, 'doc_v': doc_value },
         success: function (result) {
-          console.log(result, '==========');
+          // console.log(result, '==========');
 
           var secondSelect = $('#timeslot_id');
           secondSelect.empty();
 
-          console.log(Object.values(result.instances1), 'eee')
+          // console.log(Object.values(result.instances1), 'eee')
           var s1 = Object.values(result.instances1)
-          console.log(s1.length, '==========lengt\=========');
+          // console.log(s1.length, '==========lengt\=========');
           for (i = 0; i < s1.length; i++) {
             if (s1[i].timeslot == 0) {
               var timeslot = "09:00 am To 10:00 am"
@@ -201,9 +209,9 @@
             else if (s1[i].timeslot == 6) {
               var timeslot = "04:00 pm To 05:00 pm"
             }
-            secondSelect.append($('<option>', { value: s1[i].timeslot, text:timeslot }));
-            console.log(s1[i].timeslot, '-=-=-=-=-=-=--=-=');
-            
+            secondSelect.append($('<option>', { value: s1[i].timeslot, text: timeslot }));
+            // console.log(s1[i].timeslot, '-=-=-=-=-=-=--=-=');
+
           }
 
         }
