@@ -180,14 +180,14 @@ def create_patient(request):
                 email = request.POST['email'],
                 password = password,
             )
-    return render(request,'create-patient.html')
+    return render(request,'create-patient.html',{'admin':admin})
 
 
 
 def view_patient(request):
     admin = User.objects.get(email=request.session['email'])
     uid = User.objects.all().filter(roles = 'patients')
-    return render(request,'view-patient.html',{'uid':uid})
+    return render(request,'view-patient.html',{'uid':uid,'admin':admin})
 
 
 def update_patient(request,pk):
@@ -201,7 +201,7 @@ def update_patient(request,pk):
         if 'profile' in request.FILES:
             uid.profile = request.FILES['profile']
         uid.save()
-    return render(request,'update-patient.html',{'uid':uid})
+    return render(request,'update-patient.html',{'uid':uid,'admin':admin})
 
 
 
@@ -223,7 +223,7 @@ def profile_pat(request):
         if 'profile' in request.FILES:
             uid.profile = request.FILES['profile']
         uid.save()
-    return render(request,'profile-pat.html',{'uid':uid})
+    return render(request,'profile-pat.html',{'uid':uid,'admin':admin})
 
 
 
@@ -416,5 +416,6 @@ def pat_status_cancelled(request,pk):
 
 def view_appoinment_admin(request):
     uid = Appoinment.objects.all()
-    return render(request,'view-appoinment-admin.html',{'uid':uid})
+    admin = User.objects.get(email=request.session['email'])
+    return render(request,'view-appoinment-admin.html',{'uid':uid,'admin':admin})
 
