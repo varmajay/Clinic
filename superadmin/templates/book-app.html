@@ -62,7 +62,7 @@
                           <label for="issueinput6">select Time Slot: </label>
                           <select id="timeslot_id" name="timeslot" class="form-control" data-toggle="tooltip"
                             data-trigger="hover" data-placement="top" data-title="Status">
-                            <option value="">--------------------------SELECT----------------------------</option>
+                            <option value="" >--------------------------SELECT----------------------------</option>
                           </select>
                           <!-- <select id='timeslot_id' name="weeks" class="form-control" data-toggle="tooltip"
                             data-trigger="hover" data-placement="top" data-title="Priority"></select> -->
@@ -120,6 +120,7 @@
 
           var secondSelect = $('#week_id');
           secondSelect.empty();
+          
 
           // console.log(Object.values(result.instances), 'eee')
           var s = Object.values(result.instances)
@@ -130,10 +131,10 @@
             return element.weeks
           })
           slot = [...new Set(slot)]
-          console.log(slot);
+          // console.log(slot);
+          secondSelect.append($('<option>', { value:'', text:'--------------------------SELECT----------------------------' }));
           for (i = 0; i < slot.length; i++) {
-
-
+            
             if (slot[i] == 0) {
               var week = "Monday"
             }
@@ -155,6 +156,7 @@
             else {
               var week = "Sunday"
             }
+            
             secondSelect.append($('<option>', { value: slot[i], text: week }));
             // console.log(i, '-=-=-=-=-=-=--=-=');
 

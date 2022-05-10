@@ -25,8 +25,8 @@ def index(request):
     pat_count = User.objects.filter(roles ='patients').count()
     app_count = Appoinment.objects.filter().count()
     print(app_count)
-    uid = User.objects.get(email=request.session['email'])
-    return render(request,'index.html',{'uid':uid,'pat_count':pat_count,'app_count':app_count,'doc_count':doc_count})
+    admin = User.objects.get(email=request.session['email'])
+    return render(request,'index.html',{'admin':admin,'pat_count':pat_count,'app_count':app_count,'doc_count':doc_count})
 
 def index_doc(request):
     doc_count = User.objects.filter(roles ='doctor').count()
@@ -87,6 +87,7 @@ def logout(request):
 
 #--------------------------------------------------Doctor------------------------------------------------------# 
 def create_doctor(request):
+    admin = User.objects.get(email=request.session['email'])
     if request.method == "POST":
         try:
             User.objects.get(email=request.POST['email'])
@@ -108,17 +109,19 @@ def create_doctor(request):
                 password = password,
             )
         return 
-    return render(request,'create-doctor.html')
+    return render(request,'create-doctor.html',{'admin':admin})
 
 
 
 
 def view_doctor(request):
+    admin = User.objects.get(email=request.session['email'])
     uid = User.objects.all().filter(roles ='doctor')
-    return render(request,'view-doctor.html',{'uid':uid})
+    return render(request,'view-doctor.html',{'admin':admin,'uid':uid})
 
 
 def update_doctor(request,pk):
+    admin = User.objects.get(email=request.session['email'])
     uid = User.objects.get(id=pk)
     if request.method == 'POST':
         uid.name=request.POST['name']
@@ -127,7 +130,7 @@ def update_doctor(request,pk):
         uid.specialty = request.POST['specialty']
         uid.address = request.POST['address']
         uid.save()
-    return render(request,'update-doctor.html',{'uid':uid})
+    return render(request,'update-doctor.html',{'admin':admin,'uid':uid})
 
 
 
@@ -139,6 +142,7 @@ def delete_doctor(request,pk):
 
 
 def profile_doc(request):
+    admin = User.objects.get(email=request.session['email'])
     uid = User.objects.get(email=request.session['email'])
     if request.method == 'POST':
         uid.name = request.POST['name']
@@ -155,6 +159,7 @@ def profile_doc(request):
 #---------------------------------------------------------patient-----------------------------------------------#
 
 def create_patient(request):
+    admin = User.objects.get(email=request.session['email'])
     if request.method == "POST":
         try:
             User.objects.get(email=request.POST['email'])
@@ -180,11 +185,13 @@ def create_patient(request):
 
 
 def view_patient(request):
+    admin = User.objects.get(email=request.session['email'])
     uid = User.objects.all().filter(roles = 'patients')
     return render(request,'view-patient.html',{'uid':uid})
 
 
 def update_patient(request,pk):
+    admin = User.objects.get(email=request.session['email'])
     uid = User.objects.get(id=pk)
     if request.method == 'POST':
         uid.name=request.POST['name']
@@ -207,6 +214,7 @@ def delete_patient(request,pk):
 
 
 def profile_pat(request):
+    admin = User.objects.get(email=request.session['email'])
     uid = User.objects.get(email=request.session['email'])
     if request.method == "POST":
         uid.name = request.POST['name']
@@ -223,6 +231,7 @@ def profile_pat(request):
 
 #----------------------------------------------------------slot---------------------------------------------------#
 def slot(request):
+    admin = User.objects.get(email=request.session['email'])
     uid = Slot.objects.all()
     data = User.objects.get(email = request.session['email'])
     if request.method == 'POST':
@@ -235,6 +244,7 @@ def slot(request):
 
 
 def slot_view(request):
+    admin = User.objects.get(email=request.session['email'])
     sess = User.objects.get(email=request.session['email'])
     uid = Slot.objects.all().order_by('weeks')
     # print(uid.doctor_name)
@@ -242,6 +252,7 @@ def slot_view(request):
 
 
 def slot_update(request,pk):
+    admin = User.objects.get(email=request.session['email'])
     uid = Slot.objects.get(id=pk)
     if request.method == 'POST':
         uid.weeks = request.POST['weeks']

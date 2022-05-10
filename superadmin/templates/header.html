@@ -104,7 +104,7 @@
               </div>
             </form>
           </div>
-          <marquee direction="side" height="30" width="600" style="color: blue;"> <h3><b>&#128512; Hello , welcome to  "Clinic"</b></h3> </marquee>
+          <marquee direction="side" height="30" width="600" style="color: blue;"> <h3><b>&#128512; Hello {{admin.name}}, welcome to  "Clinic"</b></h3> </marquee>
           <div class="navbar-container">
             <div id="navbarSupportedContent" class="collapse navbar-collapse">
               <ul class="navbar-nav">
@@ -114,8 +114,8 @@
                 
                 <li class="dropdown nav-item"><a id="dropdownBasic3" href="#" data-toggle="dropdown" class="nav-link position-relative dropdown-toggle"><i class="ft-user font-medium-3 blue-grey darken-4"></i>
                     <p class="d-none">User Settings</p></a>
-                  <div ngbdropdownmenu="" aria-labelledby="dropdownBasic3" class="dropdown-menu text-left dropdown-menu-right text-sm-center"><img src="{{uid.profile.url}}" alt="" style="height: 50px; width: 50px;"><br></i><span>{{uid.name}}</span>
-                    {{uid.email}}
+                  <div ngbdropdownmenu="" aria-labelledby="dropdownBasic3" class="dropdown-menu text-left dropdown-menu-right text-sm-center"><img src="{{admin.profile.url}}" alt="" style="height: 50px; width: 50px;"><br></i><span>{{admin.name}}</span>
+                    {{admin.email}}
                     <div class="dropdown-divider"></div><a href="{% url 'logout'%}" class="dropdown-item"><i class="ft-power mr-2"></i><span>Logout</span></a>
                   </div>
                 </li>
