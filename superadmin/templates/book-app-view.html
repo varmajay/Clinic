@@ -95,7 +95,9 @@ table tr td:first-child::before {
                       <button type="button" class="btn btn-raised btn-primary btn-min-width dropdown-toggle"
                         data-toggle="dropdown" >Action</button>
                       <div class="dropdown-menu" di>
-                        {% if app.status == 3 or 1 %}
+                        {% if app.status == 3 %}
+                        <a class="dropdown-item" href="" style="color: red;">Canceled</a>
+                        {% elif app.status == 1 %}
                         <a class="dropdown-item" href="" style="color: red;">Canceled</a>
                         {% else %}
                         <a class="dropdown-item" href="{% url 'pat-status-cancelled' app.id %}" style="color: red;">Canceled</a>

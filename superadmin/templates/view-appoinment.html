@@ -96,8 +96,8 @@ table tr td:first-child::before {
                         data-toggle="dropdown" >Action</button>
                       <div class="dropdown-menu">
                         <a class="dropdown-item" href="{% url 'status-complete' app.id %}" style="color: green;">Completed</a>
-                        <a class="dropdown-item" href="{% url 'status-absent' app.id %}"" style="color:red">Absent</a>
-                        <a class="dropdown-item" href="{% url 'status-cancelled' app.id %}"" style="color: red;">Canceled</a>
+                        <a class="dropdown-item" href="{% url 'status-absent' app.id %}" style="color:red">Absent</a>
+                        <a class="dropdown-item" href="{% url 'status-cancelled' app.id %}" style="color: red;">Canceled</a>
                     </div>
                   </td>
                   {% if app.status == 0 %}
