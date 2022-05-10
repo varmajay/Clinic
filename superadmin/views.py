@@ -107,8 +107,7 @@ def create_doctor(request):
                 name = request.POST['name'],
                 email = request.POST['email'],
                 password = password,
-            )
-        return 
+            ) 
     return render(request,'create-doctor.html',{'admin':admin})
 
 
