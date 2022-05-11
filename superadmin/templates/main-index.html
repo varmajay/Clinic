@@ -282,41 +282,39 @@
 
       </div>
     </section><!-- End Departments Section -->
-
-    <!-- ======= Doctors Section ======= -->
-    <section id="doctors" class="doctors">
-      <div class="container">
+   <!-- ======= Testimonials Section ======= -->
+    <section id="testimonials" class="testimonials section-bg">
+      <div class="container" data-aos="fade-up">
 
         <div class="section-title">
           <h2>Doctors</h2>
           <p>Doctors, also known as physicians, are licensed health professionals who maintain and restore human health through the practice
-             of medicine. They examine patients, review their medical history, diagnose
-             illnesses or injuries, administer treatment, and counsel patients on their health and well being.</p>
+            of medicine. They examine patients, review their medical history, diagnose
+            illnesses or injuries, administer treatment, and counsel patients on their health and well being.</p>
         </div>
 
-        <div class="row">
-          {% for doctor in doc %}
-          <div class="col-lg-6">
-            <div class="member d-flex align-items-start">
-              <div class="pic"><img src="{{doctor.profile.url}}" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>{{doctor.name}}</h4>
-                <span>{{doctor.specialty}}</span>
-                <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
-                <div class="social">
-                  <a href=""><i class="ri-twitter-fill"></i></a>
-                  <a href=""><i class="ri-facebook-fill"></i></a>
-                  <a href=""><i class="ri-instagram-fill"></i></a>
-                  <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-                </div>
+        <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="1">
+          <div class="swiper-wrapper">
+            {% for doctor in doc %}
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  Doctor are God 
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+                <img src="{{doctor.profile.url}}" class="testimonial-img " alt="">
+                <h3>{{doctor.name}}</h3>
+                <h4>{{doctor.specialty}}</h4>
               </div>
-            </div>
+            </div><!-- End testimonial item -->
+            {% endfor %}
           </div>
-          {% endfor %}
+          <div class="swiper-pagination"></div>
         </div>
 
       </div>
-    </section><!-- End Doctors Section -->
+    </section><!-- End Testimonials Section -->
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
