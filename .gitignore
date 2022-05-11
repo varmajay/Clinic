@@ -27,9 +27,8 @@ venv
 
 media
 
-f3Project/dynamic_db.py
 
-f3Project/settings.py
+clinic/settings.py
 
 **/migrations/**
 
