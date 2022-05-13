@@ -1,5 +1,8 @@
 from django.urls import path
 from .import views
+
+
+
 urlpatterns = [
     path('',views.main_index,name='main-index'),
     path('index/',views.index,name='index'),
@@ -46,4 +49,6 @@ urlpatterns = [
     path('status-cancelled/<int:pk>',views.status_cancelled,name='status-cancelled'),
     path('pat-status-cancelled/<int:pk>',views.pat_status_cancelled,name='pat-status-cancelled'),
 
+
+    # path('decorator_login',views.decorator_login,name='decorator_login')
 ]

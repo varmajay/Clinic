@@ -18,9 +18,6 @@ __pycache__/
 *.py[cod]
 
 *$py.class
-
-venv
-
 /grit_config.json
 
 #crit_app_backend/settings/.env

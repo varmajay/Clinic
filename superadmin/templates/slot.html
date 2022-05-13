@@ -15,6 +15,9 @@
                   <div class="card-header">
                     <h4 class="card-title" id="horz-layout-basic">Add Slot</h4><br><br>
                   </div>
+                  {% if msg %}
+                  <p  style="color: blue;text-align:center;">{{msg}}</p>
+                  {% endif %}
                   <div class="card-content">
                     <div class="px-3">
                       <form class="form form-horizontal" action="{% url 'slot'%}" method="post">

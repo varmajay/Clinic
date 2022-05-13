@@ -34,7 +34,7 @@
                         <div class="form-group col-12 mb-2">
                           <label for="issueinput5">Select Doctor: </label>
                           <select id="doc" name="doctor_name" class="form-control" data-toggle="tooltip"
-                            data-trigger="hover" data-placement="top" data-title="Priority">
+                            data-trigger="hover" data-placement="top" data-title="Priority" required>
                             <option value="">--------------------------SELECT----------------------------</option>
                             {% for x in book %}
                             <option value="{{x.id}}">{{x.name}}</option>

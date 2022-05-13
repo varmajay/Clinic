@@ -1,16 +1,28 @@
-from calendar import week
+
 import json
 import email
-from itertools import count
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.conf import settings
 from django.core.mail import send_mail
 from .models import *
+# from django.contrib.auth.decorators import login_required
+
+
+
+
+# def decorator_login(request):
+#     uid = User.objects.get(email=request.Session['email'])
+#     if uid.is_activate:
+#         return redirect('index')
+#     else:
+#         return redirect('login')
+
+
+
+
 
 # Create your views here.
-
-
 def main_index(request):
     doc_count = User.objects.filter(roles ='doctor').count()
     pat_count = User.objects.filter(roles ='patients').count()
@@ -85,14 +97,14 @@ def logout(request):
 
 
 
-#--------------------------------------------------Doctor------------------------------------------------------# 
+#-------------------------------------------------Doctor------------------------------------------------------# 
 def create_doctor(request):
     admin = User.objects.get(email=request.session['email'])
     if request.method == "POST":
         try:
             User.objects.get(email=request.POST['email'])
             msg = "Doctor Email is already Exits "
-            return render(request,'create-doctor.html',{'msg':msg})
+            return render(request,'create-doctor.html',{'msg':msg,'admin':admin})
         except:
             password = ''.join(choices('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=8))
             subject = 'welcome to Clinic'
@@ -230,20 +242,37 @@ def profile_pat(request):
 
 #----------------------------------------------------------slot---------------------------------------------------#
 def slot(request):
-    admin = User.objects.get(email=request.session['email'])
-    uid = Slot.objects.all()
     data = User.objects.get(email = request.session['email'])
-    if request.method == 'POST':
-        Slot.objects.create(
-            doctor_id = data,
-            weeks = request.POST['weeks'],
-            timeslot = request.POST['timeslot']
-        )
-    return render(request,'slot.html',{'uid':uid})
+    uid = Slot.objects.filter(doctor_id__id = data.id)
+    # print(uid)
+    if request.method == "POST":
+        for con in uid:
+            # print(con)
+            # print(con.timeslot)
+            # print(request.POST['timeslot'])
+            # print(con.weeks)
+            # print(request.POST['weeks'])
+            # print(con.timeslot == int(request.POST['timeslot']))
+            # print(con.weeks == int(request.POST['weeks']))
+            # print('-----------------------------------')
+            if con.timeslot == int(request.POST['timeslot']) and con.weeks == int(request.POST['weeks']):
+                print('hello')
+                msg='Slot is Already Added'
+                # return render(request,'slot.html',{'msg':'Slot is Already Added'}) 
+            else:
+                # Slot.objects.create(
+                #     doctor_id = data,
+                #     weeks = request.POST['weeks'],
+                #     timeslot = request.POST['timeslot']
+                # )
+                msg = "Slot Added Sucessfully"
+        return render(request,'slot.html',{'msg':msg})
+    return render(request,'slot.html')
 
+    
+        
 
 def slot_view(request):
-    admin = User.objects.get(email=request.session['email'])
     sess = User.objects.get(email=request.session['email'])
     uid = Slot.objects.all().order_by('weeks')
     # print(uid.doctor_name)
@@ -251,7 +280,6 @@ def slot_view(request):
 
 
 def slot_update(request,pk):
-    admin = User.objects.get(email=request.session['email'])
     uid = Slot.objects.get(id=pk)
     if request.method == 'POST':
         uid.weeks = request.POST['weeks']
