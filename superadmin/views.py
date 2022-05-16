@@ -6,24 +6,22 @@ from django.shortcuts import redirect, render
 from django.conf import settings
 from django.core.mail import send_mail
 from .models import *
-# from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required
 
 
 
-
-# def decorator_login(request):
-#     uid = User.objects.get(email=request.Session['email'])
-#     if uid.is_activate:
-#         return redirect('index')
-#     else:
-#         return redirect('login')
-
+def check_login(request):
+    try: 
+        uid = User.objects.get(email=request.session['email'])
+        return redirect(True)
+    except:
+        return redirect('login')
 
 
 
 
 # Create your views here.
-def main_index(request):
+def main_index(request): 
     doc_count = User.objects.filter(roles ='doctor').count()
     pat_count = User.objects.filter(roles ='patients').count()
     doc = User.objects.filter(roles ='doctor')
@@ -101,6 +99,7 @@ def logout(request):
 
 #-------------------------------------------------Doctor------------------------------------------------------# 
 # @login_required(login_url='login')
+# @check_login()
 def create_doctor(request):
     # uid = User.objects.get(email=request.session['email'])
     admin = User.objects.get(email=request.session['email'])
@@ -251,9 +250,9 @@ def slot(request):
     uid = Slot.objects.filter(doctor_id__id = data.id)
     # print(uid)
 
-    uid2 = Slot.objects.filter(doctor_id__id = data.id,timeslot= int(request.POST['timeslot']),weeks=int(request.POST['weeks'])).exists()
-    print(uid2,'---------------------------------')
+    # print(uid2,'---------------------------------')
     if request.method == "POST":
+        uid2 = Slot.objects.filter(doctor_id__id = data.id,timeslot= int(request.POST['timeslot']),weeks=int(request.POST['weeks'])).exists()
         if uid2:
             # print('Duplicate', int(request.POST['timeslot']))
             msg='Slot is Already Added'
@@ -276,7 +275,7 @@ def slot(request):
 
 def slot_view(request):
     sess = User.objects.get(email=request.session['email'])
-    uid = Slot.objects.all().order_by('weeks')
+    uid = Slot.objects.all().order_by('weeks','timeslot')
     # print(uid.doctor_name)
     return render(request,'slot-view.html',{'uid':uid,'sess':sess})
 
@@ -333,10 +332,10 @@ def create_book_app(request):
     # print(request.POST['slot_id'])
     # doc_v = request.GET.get("doc_v")
     pat = User.objects.get(email=request.session['email'])
-    getslot = Slot.objects.get(weeks=request.POST['weeks'], timeslot = request.POST['timeslot'])
     # print(getslot,'---------------------svkj sj--------nc hzc')
     # print(getslot,'hekkojz ffcz')
     if request.method == "POST":
+        getslot = Slot.objects.get(weeks=request.POST['weeks'], timeslot = request.POST['timeslot'],doctor_id__id = request.POST['doctor_name'])
         Appoinment.objects.create(
             slot = getslot,
             patients_id = pat.id,

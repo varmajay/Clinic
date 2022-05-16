@@ -51,4 +51,5 @@ urlpatterns = [
 
 
     # path('decorator_login',views.decorator_login,name='decorator_login')
+    path('check-login',views.check_login,name='check-login'),
 ]
