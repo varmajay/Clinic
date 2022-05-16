@@ -40,12 +40,14 @@ def index(request):
     admin = User.objects.get(email=request.session['email'])
     return render(request,'index.html',{'admin':admin,'pat_count':pat_count,'app_count':app_count,'doc_count':doc_count})
 
+
 def index_doc(request):
     doc_count = User.objects.filter(roles ='doctor').count()
     pat_count = User.objects.filter(roles ='patients').count()
     app_count = Appoinment.objects.all().count()
     uid = User.objects.get(email=request.session['email'])
     return render(request,'index-doc.html',{'uid':uid,'pat_count':pat_count,'app_count':app_count,'doc_count':doc_count})
+
 
 def index_pat(request):
     uid = User.objects.get(email=request.session['email'])
@@ -98,7 +100,9 @@ def logout(request):
 
 
 #-------------------------------------------------Doctor------------------------------------------------------# 
+# @login_required(login_url='login')
 def create_doctor(request):
+    # uid = User.objects.get(email=request.session['email'])
     admin = User.objects.get(email=request.session['email'])
     if request.method == "POST":
         try:
@@ -121,7 +125,7 @@ def create_doctor(request):
                 password = password,
             ) 
     return render(request,'create-doctor.html',{'admin':admin})
-
+        
 
 
 
@@ -129,6 +133,7 @@ def view_doctor(request):
     admin = User.objects.get(email=request.session['email'])
     uid = User.objects.all().filter(roles ='doctor')
     return render(request,'view-doctor.html',{'admin':admin,'uid':uid})
+
 
 
 def update_doctor(request,pk):
@@ -142,6 +147,7 @@ def update_doctor(request,pk):
         uid.address = request.POST['address']
         uid.save()
     return render(request,'update-doctor.html',{'admin':admin,'uid':uid})
+
 
 
 
@@ -239,33 +245,29 @@ def profile_pat(request):
 
 
 
-
 #----------------------------------------------------------slot---------------------------------------------------#
 def slot(request):
     data = User.objects.get(email = request.session['email'])
     uid = Slot.objects.filter(doctor_id__id = data.id)
     # print(uid)
+
+    uid2 = Slot.objects.filter(doctor_id__id = data.id,timeslot= int(request.POST['timeslot']),weeks=int(request.POST['weeks'])).exists()
+    print(uid2,'---------------------------------')
     if request.method == "POST":
-        for con in uid:
-            # print(con)
-            # print(con.timeslot)
-            # print(request.POST['timeslot'])
-            # print(con.weeks)
-            # print(request.POST['weeks'])
-            # print(con.timeslot == int(request.POST['timeslot']))
-            # print(con.weeks == int(request.POST['weeks']))
-            # print('-----------------------------------')
-            if con.timeslot == int(request.POST['timeslot']) and con.weeks == int(request.POST['weeks']):
-                print('hello')
-                msg='Slot is Already Added'
-                # return render(request,'slot.html',{'msg':'Slot is Already Added'}) 
-            else:
-                Slot.objects.create(
-                    doctor_id = data,
-                    weeks = request.POST['weeks'],
-                    timeslot = request.POST['timeslot']
-                )
-                msg = "Slot Added Sucessfully"
+        if uid2:
+            # print('Duplicate', int(request.POST['timeslot']))
+            msg='Slot is Already Added'
+            return render(request,'slot.html',{'msg':'Slot is Already Added'}) 
+        else:
+            # print('Non-Duplicate', int(request.POST['timeslot']))
+
+            Slot.objects.create(
+                doctor_id = data,
+                weeks = request.POST['weeks'],
+                timeslot = request.POST['timeslot']
+            )
+            print('hello')
+            msg = "Slot Added Sucessfully"
         return render(request,'slot.html',{'msg':msg})
     return render(request,'slot.html')
 
@@ -279,7 +281,9 @@ def slot_view(request):
     return render(request,'slot-view.html',{'uid':uid,'sess':sess})
 
 
+
 def slot_update(request,pk):
+    sess = User.objects.get(email=request.session['email'])
     uid = Slot.objects.get(id=pk)
     # uid = Slot.objects.filter(doctor_id__id = data.id)
     if request.method == 'POST':
@@ -288,6 +292,7 @@ def slot_update(request,pk):
         uid.save()
         msg = "Slot Added Sucessfully"
     return render(request,'slot-update.html',{'uid':uid})
+
 
 def slot_delete(request,pk):
     slot = Slot.objects.get(id=pk)
@@ -318,11 +323,9 @@ def book_app(request):
             f_id.append(a1.slot.id)
     # print(f_id,'===============')
     final_slot = Slot.objects.all().exclude(id__in=f_id).order_by('weeks')
-    print(final_slot,'---------------final_slot---------------------')
-
-
-            
+    # print(final_slot,'---------------final_slot---------------------')
     return render(request,'book-app.html',{'book':book,'slot':slot})
+
 
 def create_book_app(request):
     # print(request.POST['weeks'])
@@ -348,7 +351,7 @@ def create_book_app(request):
 
 
 def get_slot_list(request):
-    # print(request.GET.get("doc_n"),'-----------------------')
+        # print(request.GET.get("doc_n"),'-----------------------')
     temp = User.objects.get(email = request.session['email'])
     week_n = request.GET.get("week_n")
     doc_v = request.GET.get("doc_v")
@@ -376,6 +379,7 @@ def get_slot_list(request):
     # return HttpResponse(slot)
 
 
+
 def book_app_view(request):   #PATIENTS
     pat = User.objects.get(email= request.session['email'])
     uid = Appoinment.objects.filter(patients_id=pat.id)
@@ -393,7 +397,7 @@ def view_appoinment(request): #DOCTOR
     uid = Appoinment.objects.filter(slot__doctor_id=doc.id)
     # print(uid)
     return render(request,'view-appoinment.html',{'uid':uid,'doc':doc})
-
+  
 
 
 
@@ -447,4 +451,5 @@ def view_appoinment_admin(request):
     uid = Appoinment.objects.all()
     admin = User.objects.get(email=request.session['email'])
     return render(request,'view-appoinment-admin.html',{'uid':uid,'admin':admin})
+
 
