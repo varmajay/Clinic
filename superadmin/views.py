@@ -260,11 +260,11 @@ def slot(request):
                 msg='Slot is Already Added'
                 # return render(request,'slot.html',{'msg':'Slot is Already Added'}) 
             else:
-                # Slot.objects.create(
-                #     doctor_id = data,
-                #     weeks = request.POST['weeks'],
-                #     timeslot = request.POST['timeslot']
-                # )
+                Slot.objects.create(
+                    doctor_id = data,
+                    weeks = request.POST['weeks'],
+                    timeslot = request.POST['timeslot']
+                )
                 msg = "Slot Added Sucessfully"
         return render(request,'slot.html',{'msg':msg})
     return render(request,'slot.html')
@@ -281,10 +281,12 @@ def slot_view(request):
 
 def slot_update(request,pk):
     uid = Slot.objects.get(id=pk)
+    # uid = Slot.objects.filter(doctor_id__id = data.id)
     if request.method == 'POST':
         uid.weeks = request.POST['weeks']
         uid.timeslot = request.POST['timeslot']
         uid.save()
+        msg = "Slot Added Sucessfully"
     return render(request,'slot-update.html',{'uid':uid})
 
 def slot_delete(request,pk):

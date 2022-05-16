@@ -20,7 +20,9 @@
                       <form class="form form-horizontal" action="{% url 'slot-update' uid.id %}" method="post">
                         {% csrf_token %}
                           
-          
+                        {% if msg %}
+                        <p style="color: blue;">{{msg}}</p>
+                        {% endif %}
                          
                           <div class="form-group row">
                             <label class="col-md-3 label-control" for="projectinput7">Weeks : </label>
@@ -90,7 +92,7 @@
                             <label class="col-md-3 label-control" for="projectinput6">Time Slot: </label>
                             <div class="col-md-9">
                               <select id="projectinput6" name="timeslot" class="form-control">
-                                {% if timeslot == 0 %}
+                                {% if uid.timeslot == 0 %}
                                 <option value="0" selected>09:00 am To 10:00 am</option>
                                 <option value="1">10:00 am TO 11:00 am</option>
                                 <option value="2">11:00 am To 12:00 am</option>
@@ -98,7 +100,7 @@
                                 <option value="4">02:00 pm To 03:00 pm</option>
                                 <option value="5">03:00 pm To 04:00 pm</option>
                                 <option value="6">04:00 pm To 05:00 pm</option>
-                                {% elif timeslot == 1 %}
+                                {% elif uid.timeslot == 1 %}
                                 <option value="0">09:00 am To 10:00 am</option>
                                 <option value="1" selected>10:00 am TO 11:00 am</option>
                                 <option value="2">11:00 am To 12:00 am</option>
@@ -106,7 +108,7 @@
                                 <option value="4">02:00 pm To 03:00 pm</option>
                                 <option value="5">03:00 pm To 04:00 pm</option>
                                 <option value="6">04:00 pm To 05:00 pm</option>
-                                {% elif timeslot == 2 %}
+                                {% elif uid.timeslot == 2 %}
                                 <option value="0">09:00 am To 10:00 am</option>
                                 <option value="1">10:00 am TO 11:00 am</option>
                                 <option value="2" selected>11:00 am To 12:00 am</option>
@@ -114,7 +116,7 @@
                                 <option value="4">02:00 pm To 03:00 pm</option>
                                 <option value="5">03:00 pm To 04:00 pm</option>
                                 <option value="6">04:00 pm To 05:00 pm</option>
-                                {% elif timeslot == 3 %}
+                                {% elif uid.timeslot == 3 %}
                                 <option value="0">09:00 am To 10:00 am</option>
                                 <option value="1">10:00 am TO 11:00 am</option>
                                 <option value="2">11:00 am To 12:00 am</option>
@@ -122,7 +124,7 @@
                                 <option value="4">02:00 pm To 03:00 pm</option>
                                 <option value="5">03:00 pm To 04:00 pm</option>
                                 <option value="6">04:00 pm To 05:00 pm</option>
-                                {% elif timeslot == 4 %}
+                                {% elif uid.timeslot == 4 %}
                                 <option value="0">09:00 am To 10:00 am</option>
                                 <option value="1">10:00 am TO 11:00 am</option>
                                 <option value="2">11:00 am To 12:00 am</option>
@@ -130,7 +132,7 @@
                                 <option value="4" selected>02:00 pm To 03:00 pm</option>
                                 <option value="5">03:00 pm To 04:00 pm</option>
                                 <option value="6">04:00 pm To 05:00 pm</option>
-                                {% elif timeslot == 5 %}
+                                {% elif uid.timeslot == 5 %}
                                 <option value="0">09:00 am To 10:00 am</option>
                                 <option value="1">10:00 am TO 11:00 am</option>
                                 <option value="2">11:00 am To 12:00 am</option>
