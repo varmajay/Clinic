@@ -1,4 +1,5 @@
 
+import imp
 import json
 import email
 from django.http import HttpResponse, JsonResponse
@@ -7,6 +8,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from .models import *
 from django.contrib.auth.decorators import login_required
+from datetime import date
 
 
 
@@ -334,6 +336,8 @@ def create_book_app(request):
     pat = User.objects.get(email=request.session['email'])
     # print(getslot,'---------------------svkj sj--------nc hzc')
     # print(getslot,'hekkojz ffcz')
+    # now = datetime.date.today()
+    # print(now)
     if request.method == "POST":
         getslot = Slot.objects.get(weeks=request.POST['weeks'], timeslot = request.POST['timeslot'],doctor_id__id = request.POST['doctor_name'])
         Appoinment.objects.create(
@@ -342,6 +346,7 @@ def create_book_app(request):
             patient_name = pat.name,
             weeks = request.POST['weeks'],
             timeslot = request.POST['timeslot'],
+            date = request.POST['date'],
             description = request.POST['description'],
         )
     return redirect('book-app')
@@ -359,7 +364,7 @@ def get_slot_list(request):
     # book = User.objects.filter(roles='doctor')
     # app = Appoinment.objects.get()
     # slot = Slot.objects.filter(doctor_id = request.GET.get("doc_n")).order_by('weeks').values('id','weeks')
-    slot1 = Slot.objects.filter(weeks = week_n).filter(doctor_id=doc_v).order_by('timeslot').values('id','timeslot')
+    # slot1 = Slot.objects.filter(weeks = week_n).filter(doctor_id=doc_v).order_by('timeslot').values('id','timeslot')
 
     print(temp.id,'===========')
     booked_app = []
@@ -370,6 +375,15 @@ def get_slot_list(request):
     
     final_slot = Slot.objects.filter(doctor_id = request.GET.get("doc_n")).exclude(id__in=booked_app).order_by('weeks').values('id','weeks')
     print(final_slot,'---------------final_slot---------------------')
+
+    # print(temp.id,'===========')
+    booked_app1 = []
+    app1 = Appoinment.objects.filter(patients_id=temp.id)
+    for i in app1:
+        booked_app1.append(i.slot.id)
+    # print(booked_app1,'----------')
+    slot1 = Slot.objects.filter(weeks = week_n).filter(doctor_id=doc_v).exclude(id__in=booked_app).order_by('timeslot').values('id','timeslot')
+
     return JsonResponse({
         "instances" : list(final_slot),
         "instances1" : list(slot1)
@@ -392,10 +406,11 @@ def view_appoinment(request): #DOCTOR
     # print("ddd",doc)
     # slot = Slot.objects.filter(doctor_id=doc.id)
     # print(slot)
-
+    now = date.today()
+    print(now)
     uid = Appoinment.objects.filter(slot__doctor_id=doc.id)
     # print(uid)
-    return render(request,'view-appoinment.html',{'uid':uid,'doc':doc})
+    return render(request,'view-appoinment.html',{'uid':uid,'doc':doc,'now':now})
   
 
 

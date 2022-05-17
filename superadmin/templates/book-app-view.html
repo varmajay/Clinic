@@ -46,6 +46,7 @@ table tr td:first-child::before {
                   <th>Doctor Name</th>
                   <th>Weeks</th>
                   <th>Timeslot</th>
+                  <th>Date</th>
                   <th>Description</th>
                   <th>Action</th>
                   <th>Status</th>
@@ -88,7 +89,7 @@ table tr td:first-child::before {
                   {% elif app.slot.timeslot == 6 %}
                   <td>04:00 pm To 05:00 pm</td>
                   {% endif %}
-
+                  <td>{{app.date}}</td>
                   <td>{{app.description}}</td>
                   <td>
                     <div class="btn-group mr-1 mb-1">
