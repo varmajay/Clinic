@@ -18,6 +18,6 @@ class AdminSlot(admin.ModelAdmin):
 
 @admin.register(Appoinment)
 class AdminAppoinment(admin.ModelAdmin):
-    list_display =['id','doc_name','slot','patient_name','status']
+    list_display =['id','doc_name','slot','patient_name','date','status']
     def doc_name(self, obj):
         return obj.slot.doctor_id.name
