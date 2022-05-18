@@ -46,6 +46,7 @@ table tr td:first-child::before {
                   <th>Patient Name</th>
                   <th>Weeks</th>
                   <th>Timeslot</th>
+                  <th>Date</th>
                   <th>Description</th>
                   <th>Action</th>
                   <th>Status</th>
@@ -180,7 +181,13 @@ table tr td:first-child::before {
                   {% endif %}
                   {% endif %}
 <!-- ------------------------Timeslot End -------------------------------------------------- -->
-                 
+                  {% if app.date > now %}
+                  <td style="color: blue">{{app.date}}</td>
+                  {% elif app.date < now %}
+                  <td style="color: gray">{{app.date}}</td>
+                  {% elif app.date == now %} 
+                  <td style="color: green">{{app.date}}</td>
+                  {% endif %}
 
                   {% if app.date > now %}
                   <td style="color: blue">{{app.description}}</td>
