@@ -49,7 +49,4 @@ urlpatterns = [
     path('status-cancelled/<int:pk>',views.status_cancelled,name='status-cancelled'),
     path('pat-status-cancelled/<int:pk>',views.pat_status_cancelled,name='pat-status-cancelled'),
 
-
-    # path('decorator_login',views.decorator_login,name='decorator_login')
-    path('check-login',views.check_login,name='check-login'),
 ]
