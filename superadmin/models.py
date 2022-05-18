@@ -76,7 +76,7 @@ class Appoinment(models.Model):
     patient_name = models.CharField(max_length=30)
     weeks = models.IntegerField()
     timeslot = models.IntegerField()
-    date =models.DateField(default=date.today())
+    date =models.DateField()
     description = models.TextField( default=None)
     status = models.IntegerField(default=0,choices=STATUS)
 
