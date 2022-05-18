@@ -456,7 +456,7 @@ def view_appoinment(request): #DOCTOR
         # print(slot)
         now = date.today()
         print(now)
-        uid = Appoinment.objects.filter(slot__doctor_id=doc.id)
+        uid = Appoinment.objects.filter(slot__doctor_id=doc.id).order_by('date')
         # print(uid)
         return render(request,'view-appoinment.html',{'uid':uid,'doc':doc,'now':now})
     except:
